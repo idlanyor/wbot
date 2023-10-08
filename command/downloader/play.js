@@ -18,10 +18,9 @@ module.exports = {
 		// message struct
 		let buttonMessage = {
 			image: { url: ytsData[0].thumbnail },
-			caption: `📙 Title: ${ytsData[0].title}\n📎 Url: ${ytsData[0].url}\n🚀 Upload: ${ytsData[0].ago}\n\nWant a video version? click button below, or you don\'t see it? type *!ytv youtube_url*\n\nAudio on progress....`,
+			caption: `📙 Title: ${ytsData[0].title}\n📎 Url: ${ytsData[0].url}\n🚀 Upload: ${ytsData[0].ago}\n\nAudio on progress....`,
 			footer,
 			headerType: 4,
-			buttons: [{ buttonText: { displayText: "Video" }, buttonId: `#ytv ${ytsData[0].url} SMH`, type: 1 }],
 			viewOnce: false,
 		};
 
@@ -34,7 +33,8 @@ module.exports = {
 						`*Title:* ${res.title}\n` +
 						`*Quality:* ${res.q}\n*Size:* ${res.sizeF}\n*Download:* ${short}\n\n_Filesize to big_`;
 					await sock.sendMessage(from, { image: { url: res.thumb }, caption: capt }, { quoted: msg });
-				} else {
+				} 
+				else {
 					let respMsg = await sock.sendMessage(
 						from,
 						{ audio: await fetchBuffer(res.dl_link, { skipSSL: true }), mimetype: "audio/mpeg" },
@@ -47,11 +47,11 @@ module.exports = {
 					await sock.sendMessage(
 						from,
 						{
-							text: "Wrong music?\nclick button below to choose another search result.",
-							buttonText: "Search Result",
-							footer: footer,
-							mentions: [sender],
-							sections,
+							text: "Terima kasih sudah menggunakan.",
+							// buttonText: "Search Result",
+							// footer: footer,
+							// mentions: [sender],
+							// sections,
 						},
 						{ quoted: respMsg }
 					);

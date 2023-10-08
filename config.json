@@ -1,0 +1,19 @@
+{
+    "botName": "Kanata",
+    "owner": [
+        "6281882898488@s.whatsapp.net",
+        "6287782770017@s.whatsapp.net"
+    ],
+    "openWeather": "48d0d41a45c0d9f4f20dc5547e2e74dc",
+    "igCookie": "52192938108%3AHAsYfomO2mTeJ2%3A16%3AAYdCRbC_9rwSQafncAygjBmutHdyUuj5EpWFTJ1fYg",
+    "session": "session",
+    "user_db": "users-db.json",
+    "chat_store": "baileys-store.json",
+    "timezone": "Asia/Jakarta",
+    "footer": "Kanata Bot • Roy",
+    "tier": {
+        "drakath": 200,
+        "nulgath": 500,
+        "artix": 999
+    }
+}

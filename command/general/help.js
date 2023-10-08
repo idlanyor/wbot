@@ -41,17 +41,16 @@ module.exports = {
 			}
 			let str =
 				`Hello, ${pushName === undefined ? sender.split("@")[0] : pushName}\n*Here My Command List*\n\n` +
-				`╭──────❨ *${botName}* ❩\n╰─────────\n` +
-				"╭──────❨ *DONATE* ❩\n├ Ko-fi: https://ko-fi.com/faizbastomi\n├ saweria: https://saweria.co/faizbastomi\n" +
-				"├ trakteer: https://trakteer.id/faizbastomi\n╰─────────\n"+
-				"╭──────❨ *SOURCE CODE* ❩\n├ https://github.com/FaizBastomi/wbot\n╰────────────\n\n";
+				`╭──────❨ *${botName}* ❩\n` +
+				"├ Dev1: - Roynaldi\n" +
+				"├ Dev2: - Faiz Bastomi\n" +
+				`╰─────────\n`
 			const keys = Object.keys(category);
 			for (const key of keys) {
 				str += `╭──────❨ *${key.toUpperCase()}* ❩\n\`\`\`${category[key]
 					.map(
 						(cmd, idx) =>
-							`├ ${idx + 1}. ${cmd.name}${cmd.limit ? ` (${cmd.consume || 1} limit)` : ""}${
-								cmd.premium ? ` (Premium Only)` : ""
+							`├ ${idx + 1}. ${cmd.name}${cmd.limit ? ` (${cmd.consume || 1} limit)` : ""}${cmd.premium ? ` (Premium Only)` : ""
 							}`
 					)
 					.join("\n")}\`\`\`\n╰──────────────\n`;
