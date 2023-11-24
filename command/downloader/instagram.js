@@ -1,5 +1,3 @@
-const Downloader = require("../../utils/downloader");
-const { insta } = new Downloader();
 const lang = require("../other/text.json");
 const axios = require("axios").default;
 const errMes = `ID:\n${lang.indo.util.download.igFail}\n\nEN:\n${lang.eng.util.download.igFail}`;
@@ -16,33 +14,67 @@ module.exports = {
 	async exec({ sock, msg, args }) {
 		if (!args.length > 0) return await msg.reply("Ex: !igdl *instagram_url*");
 		try {
-			const ar = await insta(args[0]);
-			if (ar.uriType === "igHigh") {
-				const type = await fastCheck(ar.media[0].url);
-				let ext = /image/.test(type)
-					? { image: { url: ar.media[0].url } }
-					: { video: { url: ar.media[0].url } };
-				await sock.sendMessage(msg.from, { ...ext }, { quoted: msg });
-			} else if (ar.uriType === "igStory") {
-				const type = await fastCheck(ar.media[0].url);
-				let ext = /image/.test(type)
-					? { image: { url: ar.media[0].url } }
-					: { video: { url: ar.media[0].url } };
-				await sock.sendMessage(msg.from, { ...ext }, { quoted: msg });
-			} else {
-				ar.url.map(async (r) => {
-					const type = await fastCheck(r);
-					let ext = /image/.test(type) ? { image: { url: r } } : { video: { url: r } };
-					await sock.sendMessage(msg.from, { ...ext }, { quoted: msg });
-				});
+			const { url } = parse(args.join(" "));
+			if (url === "") {
+				return await msg.reply("No valid URL detected");
 			}
+			await msg.reply("Tunggu sebentar ⏳ _please wait_");
+			const apiUrl = `https://api.lolhuman.xyz/api/instagram?apikey=nyanpasuu&url=${url}`;
+
+			let result = await axios.get(apiUrl);
+			let data = result.data.result;
+			data.forEach(async (d) => {
+				if (checkInstagramContentType(d) === "video") {
+					await sock.sendMessage(
+						msg.from,
+						{ video: { url: d } },
+						{ quoted: msg }
+					);
+				} else if (checkInstagramContentType(d) === "gambar") {
+					await sock.sendMessage(
+						msg.from,
+						{ image: { url: d } },
+						{ quoted: msg }
+					);
+				} else if (checkInstagramContentType(d) === "campuran") {
+					if (checkInstagramContentType(d) === "video") {
+						await sock.sendMessage(
+							msg.from,
+							{ video: { url: d } },
+							{ quoted: msg }
+						);
+					} else {
+						await sock.sendMessage(
+							msg.from,
+							{ image: { url: d } },
+							{ quoted: msg }
+						);
+					}
+
+				}
+			})
+			checkInstagramContentType(data)
 		} catch (e) {
 			await msg.reply(errMes);
 		}
 	},
 };
 
-async function fastCheck(url) {
-	const resp = await axios.get(url);
-	return resp.headers["content-type"];
+function checkInstagramContentType(link) {
+	if (link.includes('.jpg') || link.includes('.jpeg')) {
+		return 'gambar'
+	} else if (link.includes('.mp4')) {
+		return 'video'
+	} else if (link.includes('.mp4') && link.includes('.jpeg')) {
+		return 'campuran'
+	} {
+		return
+	}
 }
+const parse = (text) => {
+	const rex = /(?:https:?\/{2})?(?:w{3}|vm|vt|t)?\.?instagram.com\/([^\s&]+)/gi;
+	const url = text.match(rex);
+	return { url: url == null ? "" : url[0] };
+};
+
+
