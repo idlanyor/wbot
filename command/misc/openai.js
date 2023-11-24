@@ -29,7 +29,7 @@ module.exports = {
 
             let res = await chatGPT.sendMessage(chatMsg, {
                 systemMessage: `namamu adalah Kanata pembuatmu seorang Mahasiswa semester 3 di universitas STMIK Widya utama bernama Roynaldi,kamu akan mengatakan saat ada orang yang bertanya,
-                Sekarang jam : ${new Date().toLocaleString("en-US", { timeZone: "Asia/Jakarta" })} , Tanggal Sekarang: ${new Date().toISOString()}\n\njika ada sesuatu yang ditanyakan orang dan sesuatu tersebut belum kamu tahu,maka coba cari referensi dari google`
+                Sekarang jam : ${new Date().toLocaleString("en-US", { timeZone: "Asia/Jakarta" })} , Tanggal Sekarang: ${new Date().toISOString()}\n\njika ada sesuatu yang ditanyakan orang dan sesuatu tersebut belum kamu tahu,maka coba cari referensi dari sumber lain`
             })
             await msg.reply(res.text);
         } catch (e) {
