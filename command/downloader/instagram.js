@@ -53,7 +53,6 @@ module.exports = {
 
 				}
 			})
-			checkInstagramContentType(data)
 		} catch (e) {
 			await msg.reply(errMes);
 		}
